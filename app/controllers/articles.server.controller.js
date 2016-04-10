@@ -16,6 +16,7 @@ var getErrorMessage = function(err) {
 
 exports.create = function(req, res) {
     var article = new Article(req.body);
+    console.log("create article mehod fired");
     article.creator = req.user;
     article.save(function(err) {
         if (err) {
@@ -41,8 +42,7 @@ exports.list = function(req, res) {
 
 exports.articleByID = function(req, res, next, id) {
     Article.findById(id).populate('creator', 'firstName lastName fullName').exec(function(err, article) {if (err) return next(err);
-    if (!article) return next(new Error('Failed to load article '
-        + id));
+    if (!article) return next(new Error('Failed to load article ' + id));
     req.article = article;
     next();
 });
